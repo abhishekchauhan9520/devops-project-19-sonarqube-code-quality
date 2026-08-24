@@ -1,0 +1,38 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Checkout') {
+      steps { checkout scm }
+    }
+
+    stage('Unit Tests') {
+      steps {
+        sh 'cd projects/node-sample && npm test'
+        sh 'cd projects/java-sample && mvn -B verify'
+      }
+    }
+
+    stage('Sonar Analysis') {
+      steps {
+        withCredentials([
+          string(credentialsId: 'sonar-host', variable: 'SONAR_HOST_URL'),
+          string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')
+        ]) {
+          sh '''
+            cd projects/node-sample
+            sonar-scanner \
+              -Dproject.settings=sonar-project.properties \
+              -Dsonar.host.url="$SONAR_HOST_URL" \
+              -Dsonar.token="$SONAR_TOKEN"
+
+            cd ../java-sample
+            mvn -B sonar:sonar \
+              -Dsonar.host.url="$SONAR_HOST_URL" \
+              -Dsonar.token="$SONAR_TOKEN"
+          '''
+        }
+      }
+    }
+  }
+}
