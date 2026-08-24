@@ -1,0 +1,16 @@
+name: Repository Checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bash checks
+        run: |
+          bash -n tests/test_project.sh
+          ./tests/test_project.sh
+          bash -n scripts/*.sh
