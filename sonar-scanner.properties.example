@@ -1,0 +1,2 @@
+sonar.host.url=http://localhost:9000
+sonar.token=YOUR_TOKEN_HERE
