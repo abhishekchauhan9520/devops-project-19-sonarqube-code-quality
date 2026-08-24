@@ -1,0 +1,13 @@
+{
+  "name": "node-sample",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Small Node.js sample for SonarQube analysis.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
