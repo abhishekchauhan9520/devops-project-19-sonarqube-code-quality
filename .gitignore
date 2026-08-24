@@ -1,0 +1,7 @@
+docker/*.log
+**/target/
+**/node_modules/
+*.tmp
+.env
+*.env
+reports/
